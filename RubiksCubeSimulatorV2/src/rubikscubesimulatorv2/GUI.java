@@ -1,0 +1,400 @@
+package rubikscubesimulatorv2;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.text.DecimalFormat;
+import java.util.Random;
+import javax.swing.*;
+
+public class GUI {
+    // <editor-fold defaultstate="collapsed" desc=" DESCRIPTION ">
+    JFrame window = new JFrame();
+    Container arrangement, helpArrangement;;
+    JFrame helpView = new JFrame();
+    JLabel time;
+    Timer timer, clockTimer;
+    JPanel title = new JPanel();
+    JPanel leftButton = new JPanel();
+    JPanel rightButton = new JPanel();
+    JPanel cubeSpace = new JPanel();
+    JPanel info = new JPanel();
+    JPanel middleArea = new JPanel();
+    JPanel drawAndButtons = new JPanel();
+    JPanel results = new JPanel();
+    JPanel ltfil1 = new JPanel();
+    JPanel ltfil2 = new JPanel();
+    JPanel rtfil1 = new JPanel();
+    JPanel rtfil2 = new JPanel();
+    JPanel bottomButton;
+    JButton mL;
+    JButton mLp;
+    JButton mR;
+    JButton mRp;
+    JButton mF;
+    JButton mFp;
+    JButton mB;
+    JButton mBp;
+    JButton mU;
+    JButton mUp;
+    JButton mD;
+    JButton mDp;
+    JButton resultsButton;
+    JButton lview;
+    JButton rview;
+    JButton tview;
+    JButton bview;
+    JLabel cell1= new JLabel();
+    JLabel cell2= new JLabel();
+    JLabel cell3= new JLabel();
+    JLabel cell4= new JLabel();
+    JLabel cell5= new JLabel();
+    JLabel cell6= new JLabel();
+    JLabel cell7= new JLabel();
+    JLabel cell8= new JLabel();
+    JLabel cell9= new JLabel();
+    JLabel cell10= new JLabel();
+    JLabel cell11= new JLabel();
+    JLabel cell12= new JLabel();
+    JLabel cell13= new JLabel();
+    JLabel cell14= new JLabel();
+    JLabel cell15= new JLabel();
+    JLabel cell16= new JLabel();
+    JLabel cell17= new JLabel();
+    JLabel cell18= new JLabel();
+    JLabel cell19= new JLabel();
+    JLabel cell20= new JLabel();
+    JButton method1;
+    JButton method2;
+    JButton method3;
+    JButton doItYourself;
+    JButton Start;
+    JButton Stop;
+    JButton Reset;
+    JButton question;
+    JButton options;
+    JButton goBack = new JButton("Go Back");
+    double m1t1 = 0;
+    double m1t2 = 0;
+    double m1t3 = 0;
+    double m2t1 = 0;
+    double m2t2 = 0;
+    double m2t3 = 0;
+    double m3t1 = 0;
+    double m3t2 = 0;
+    double m3t3 = 0;
+    double avg1 = 0;
+    double avg2 = 0;
+    double avg3 = 0;
+    String m1list;
+    Random generator = new Random();
+    double startTime = 0;
+    double endTime = 0;
+    double elapsedTime = 0;
+    double startTimer = 0;
+    double endTimer = 0;
+    double elapsedTimer = 0;
+    int turns = 0;
+    int seconds = 0;
+    int minutes = 0;
+    int numm1 = 1;
+    int numm2 = 1;
+    int numm3 = 1;
+    int transfer;
+    int scramble;
+    int amount = 0;
+    int numMod = 0;
+    int numTimes = 0;
+    int moveAid = 0;
+    int methodValue;
+    Thread stopwatch;
+    ActionListener taskPerformer;
+    DecimalFormat dcf = new DecimalFormat("00.000");
+    boolean firstTurn = true;
+    boolean isTiming = false;
+    boolean firstSwitch = true;
+    boolean firstHelp = true;
+    boolean startActivated = false;
+    boolean rightAmount = true;
+    boolean m1going = false;
+    boolean doYourself = false;
+    // </editor-fold> // Variables
+    public GUI()
+    {
+        window.setSize(950,600);
+	window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	window.setTitle("Rubik's Cube Simulator");
+	arrangement = window.getContentPane();
+	arrangement.setLayout(new BorderLayout());
+	title.setSize(800, 200);
+	title.setBackground(Color.black);
+	title.setLayout(new BorderLayout());
+	middleArea.setSize(800, 400);
+	middleArea.setBackground(Color.black);
+	info.setSize(800, 200);
+	info.setBackground(Color.black);
+	arrangement.add(title, BorderLayout.NORTH);
+	arrangement.add(middleArea, BorderLayout.CENTER);
+	arrangement.add(info, BorderLayout.SOUTH);
+	JLabel name = new JLabel("Rubik's Cube Simulator", JLabel.CENTER);
+	name.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+	name.setForeground(Color.white);
+	title.add(name, BorderLayout.CENTER);
+	question = new JButton("?");
+	//question.addActionListener(this);
+	title.add(question, BorderLayout.WEST);
+        options = new JButton("Options");
+        title.add(options, BorderLayout.EAST);
+	JPanel b1 = new JPanel();
+	JPanel b2 = new JPanel();
+	JPanel b3 = new JPanel();
+	JPanel b4 = new JPanel();
+	JPanel b5 = new JPanel();
+	JPanel b6 = new JPanel();
+	info.setLayout(new GridLayout(1,6));
+	info.add(b1);
+	b1.setBackground(Color.black);
+	info.add(b2);
+	b2.setBackground(Color.black);
+	info.add(b3);
+	b3.setBackground(Color.black);
+	info.add(b4);
+	b4.setBackground(Color.black);
+	info.add(b5);
+	b5.setBackground(Color.black);
+	info.add(b6);
+	b6.setBackground(Color.black);
+	
+	//Bottom Row, Left Button
+	b1.setLayout(new BorderLayout());
+	JLabel fillb11 = new JLabel("     ");
+	b1.add(fillb11, BorderLayout.WEST);
+	resultsButton = new JButton("Results");
+	resultsButton.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+	//results.addActionListener(this);
+	b1.add(resultsButton, BorderLayout.CENTER);
+	JLabel fillb12 = new JLabel("     ");
+	b1.add(fillb12, BorderLayout.EAST);
+	
+	//Bottom Row, Left Middle Button
+	b2.setLayout(new BorderLayout());
+	JLabel fillb21 = new JLabel("     ");
+	b2.add(fillb21, BorderLayout.WEST);
+	method1 = new JButton("Layer Method");
+	method1.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+	//method1.addActionListener(this);
+	b2.add(method1, BorderLayout.CENTER);
+	JLabel fillb22 = new JLabel("     ");
+	b2.add(fillb22, BorderLayout.EAST);
+	
+	//Bottom Row, Middle Button
+	b3.setLayout(new BorderLayout());
+	JLabel fillb31 = new JLabel("     ");
+	b3.add(fillb31, BorderLayout.WEST);
+	method2 = new JButton("Petrus Method");
+	method2.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+	b3.add(method2, BorderLayout.CENTER);
+	JLabel fillb32 = new JLabel("     ");
+	b3.add(fillb32, BorderLayout.EAST);
+	
+	//Bottom Row, Right Middle Button
+	b4.setLayout(new BorderLayout());
+	JLabel fillb41 = new JLabel("     ");
+	b4.add(fillb41, BorderLayout.WEST);
+	method3 = new JButton("Roux Method");
+	method3.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+	b4.add(method3, BorderLayout.CENTER);
+	JLabel fillb42 = new JLabel("     ");
+	b4.add(fillb42, BorderLayout.EAST);
+	
+	//Bottom Row, Do it yourself button
+	b5.setLayout(new BorderLayout());
+	JLabel fillb51 = new JLabel("     ");
+	b5.add(fillb51, BorderLayout.WEST);
+	doItYourself = new JButton("Do it yourself");
+	doItYourself.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+	b5.add(doItYourself, BorderLayout.CENTER);
+	JLabel fillb52 = new JLabel("     ");
+	b5.add(fillb52, BorderLayout.EAST);
+	
+	//Bottom Row, Right Label(Time)
+	time = new JLabel("00:00:000", JLabel.CENTER);
+	time.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+	time.setForeground(Color.white);
+	b6.add(time);
+	
+	
+	middleArea.setLayout(new BorderLayout());
+	JPanel leftButton = new JPanel();
+	JPanel lbm = new JPanel();
+	JLabel ltopfil = new JLabel(" ");
+	ltopfil.setFont(new Font("Times New Roman", Font.PLAIN, 72));
+	leftButton.setLayout(new GridLayout(3,1));
+	ltfil1.setLayout(new GridLayout(3,1));
+	ltfil2.setLayout(new GridLayout(3,1));
+	mL = new JButton("L");
+	mLp = new JButton("L prime");
+	mR = new JButton("R");
+	mRp = new JButton("R prime");
+	mF = new JButton("F");
+	mFp = new JButton("F prime");
+	mB = new JButton("B");
+	mBp = new JButton("B prime");
+	mU = new JButton("U");
+	mUp = new JButton("U prime");
+	mD = new JButton("D");
+	mDp = new JButton("D prime");
+	/*mL.addActionListener(this);
+	mLp.addActionListener(this);
+	mR.addActionListener(this);
+	mRp.addActionListener(this);
+	mF.addActionListener(this);
+	mFp.addActionListener(this);
+	mB.addActionListener(this);
+	mBp.addActionListener(this);
+	mU.addActionListener(this);
+	mUp.addActionListener(this);
+	mD.addActionListener(this);
+	mDp.addActionListener(this);*/
+	JLabel lmfil1 = new JLabel("     "); //Left Middle Filler 1(To center button)
+	JLabel lmfil2 = new JLabel("     "); //Left Middle Filler 2
+	lview = new JButton("<");
+	lview.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+	//lview.addActionListener(this);
+	lbm.add(lmfil1, BorderLayout.WEST);
+	lbm.add(lmfil2, BorderLayout.EAST);
+	lbm.add(lview, BorderLayout.CENTER);
+	lbm.add(ltopfil, BorderLayout.NORTH);
+	leftButton.add(ltfil1);
+	leftButton.add(lbm);
+	leftButton.add(ltfil2);
+	leftButton.setBackground(Color.black);
+	ltopfil.setBackground(Color.black);
+	ltfil1.setBackground(Color.black);
+	ltfil2.setBackground(Color.black);
+	lmfil1.setBackground(Color.black);
+	lmfil2.setBackground(Color.black);
+	lbm.setBackground(Color.black);
+	middleArea.add(leftButton, BorderLayout.WEST);
+	
+	
+	JPanel rightButton = new JPanel();
+	JPanel rbm = new JPanel();
+	JLabel rtopfil = new JLabel(" ");
+	rtopfil.setFont(new Font("Times New Roman", Font.PLAIN, 72));
+	rightButton.setLayout(new GridLayout(3,1));
+	rtfil1.setLayout(new GridLayout(3,1));
+	rtfil2.setLayout(new GridLayout(3,1));
+	JLabel rmfil1 = new JLabel("     "); //Left Middle Filler 1(To center button)
+	JLabel rmfil2 = new JLabel("     "); //Left Middle Filler 2
+	rview = new JButton(">");
+	rview.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+	//rview.addActionListener(this);
+	rbm.add(rmfil1, BorderLayout.WEST);
+	rbm.add(rmfil2, BorderLayout.EAST);
+	rbm.add(rview, BorderLayout.CENTER);
+	rbm.add(rtopfil, BorderLayout.NORTH);
+	rightButton.add(rtfil1);
+	rightButton.add(rbm);
+	rightButton.add(rtfil2);
+	rightButton.setBackground(Color.black);
+	rtopfil.setBackground(Color.black);
+	rtfil1.setBackground(Color.black);
+	rtfil2.setBackground(Color.black);
+	rmfil1.setBackground(Color.black);
+	rmfil2.setBackground(Color.black);
+	rbm.setBackground(Color.black);
+	middleArea.add(rightButton, BorderLayout.EAST);
+	
+	
+	cubeSpace.setLayout(new BorderLayout());
+	JPanel topButton = new JPanel();
+	topButton.setLayout(new GridLayout(1,3));
+	JPanel tfil1 = new JPanel();
+	JPanel tfil2 = new JPanel();
+	JPanel tbutton = new JPanel();
+	JPanel tlfil1 = new JPanel();
+	JPanel tlfil2 = new JPanel();
+	tview = new JButton("^");
+	tview.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+	//tview.addActionListener(this);
+	tbutton.setLayout(new GridLayout(1,3));
+	tbutton.add(tlfil1);
+	tbutton.add(tview);
+	tbutton.add(tlfil2);
+	topButton.add(tfil1);
+	topButton.add(tbutton);
+	topButton.add(tfil2);
+	tfil1.setBackground(Color.black);
+	tfil2.setBackground(Color.black);
+	tlfil1.setBackground(Color.black);
+	tlfil2.setBackground(Color.black);
+	topButton.setBackground(Color.black);
+	tbutton.setBackground(Color.black);
+	cubeSpace.add(topButton, BorderLayout.NORTH);
+	middleArea.add(cubeSpace);
+	
+	
+	JPanel PPS = new JPanel();
+	PPS.setLayout(new GridLayout(1,3));
+	Start = new JButton("Start");
+	Stop = new JButton("Stop");
+	Reset = new JButton("Reset");
+	Start.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+	Stop.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+	Reset.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+	//Start.addActionListener(this);
+	//Stop.addActionListener(this);
+	//Reset.addActionListener(this);
+	PPS.add(Start);
+	PPS.add(Stop);
+	PPS.add(Reset);
+	PPS.setBackground(Color.black);
+	cubeSpace.setBackground(Color.black);
+	cubeSpace.add(PPS, BorderLayout.SOUTH);
+	middleArea.setBackground(Color.black);
+	
+	drawAndButtons.setLayout(new BorderLayout());
+	//JPanel cube = new JPanel();
+	bottomButton = new JPanel();
+	bottomButton.setLayout(new GridLayout(1,3));
+	JPanel bfil1 = new JPanel();
+	JPanel bfil2 = new JPanel();
+	JPanel bbutton = new JPanel();
+	JPanel blfil1 = new JPanel();
+	JPanel blfil2 = new JPanel();
+	bview = new JButton("\\/");
+	bview.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+	//bview.addActionListener(this);
+	bbutton.setLayout(new GridLayout(1,3));
+	bbutton.add(blfil1);
+	bbutton.add(bview);
+	bbutton.add(blfil2);
+	bottomButton.add(bfil1);
+	bottomButton.add(bbutton);
+	bottomButton.add(bfil2);
+	bfil1.setBackground(Color.black);
+	bfil2.setBackground(Color.black);
+	blfil1.setBackground(Color.black);
+	blfil2.setBackground(Color.black);
+	bottomButton.setBackground(Color.black);
+	bbutton.setBackground(Color.black);
+	//cube.setBackground(Color.black);
+	drawAndButtons.setBackground(Color.black);
+	//drawAndButtons.add(cube.draw());
+	drawAndButtons.add(bottomButton, BorderLayout.SOUTH);
+	cubeSpace.add(drawAndButtons, BorderLayout.CENTER);
+	
+	window.setVisible(true);
+    }
+    public void refresh(drawingTool dt) 
+    {
+        cubeSpace.setVisible(false);
+        drawAndButtons.removeAll();
+        drawAndButtons.add(dt);
+        drawAndButtons.add(bottomButton, BorderLayout.SOUTH);
+        cubeSpace.validate();
+        cubeSpace.repaint();
+        cubeSpace.setVisible(true);
+        this.time.repaint();
+    }
+}
